@@ -26,23 +26,27 @@ const NetworkCanvas = memo(() => {
     resize()
     window.addEventListener('resize', resize)
 
-    // Create particles - fewer for performance
-    const count = 50
+    // Create particles
+    const count = 60
+    let time = 0
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * cw,
         y: Math.random() * ch,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.4 + 0.15,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        baseR: Math.random() * 4 + 3,
+        opacity: Math.random() * 0.3 + 0.15,
+        pulseSpeed: Math.random() * 0.02 + 0.01,
+        pulseOffset: Math.random() * Math.PI * 2,
       })
     }
 
     const draw = () => {
       ctx.clearRect(0, 0, cw, ch)
+      time += 1
 
-      // Update & draw particles
+      // Update & draw particles with gentle pulse
       for (let i = 0; i < count; i++) {
         const p = particles[i]
         p.x += p.vx
@@ -53,8 +57,12 @@ const NetworkCanvas = memo(() => {
         if (p.y < 0) p.y = ch
         if (p.y > ch) p.y = 0
 
+        // Gentle breathing pulse on size
+        const pulse = Math.sin(time * p.pulseSpeed + p.pulseOffset)
+        const r = p.baseR + pulse * 1.5
+
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(255,255,255,${p.opacity})`
         ctx.fill()
       }
@@ -67,7 +75,7 @@ const NetworkCanvas = memo(() => {
         for (let j = i + 1; j < count; j++) {
           const dx = particles[i].x - particles[j].x
           const dy = particles[i].y - particles[j].y
-          if (dx * dx + dy * dy < 14400) { // 120^2
+          if (dx * dx + dy * dy < 22500) { // 150^2 — longer connections
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
           }
