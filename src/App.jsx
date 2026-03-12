@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Lenis from 'lenis'
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
 import Stats from './components/Stats/Stats'
@@ -14,8 +15,28 @@ import Footer from './components/Footer/Footer'
 
 function App() {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 })
+  const lenisRef = useRef(null)
 
-  // Smooth anchor scroll
+  // Lenis smooth scroll
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+      smoothTouch: false,
+    })
+    lenisRef.current = lenis
+
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+
+    return () => lenis.destroy()
+  }, [])
+
+  // Smooth anchor scroll via Lenis
   useEffect(() => {
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a[href^="#"]')
@@ -24,9 +45,8 @@ function App() {
         if (id && id !== '#') {
           e.preventDefault()
           const el = document.querySelector(id)
-          if (el) {
-            const top = el.getBoundingClientRect().top + window.scrollY - 80
-            window.scrollTo({ top, behavior: 'smooth' })
+          if (el && lenisRef.current) {
+            lenisRef.current.scrollTo(el, { offset: -80 })
           }
         }
       }
