@@ -1,0 +1,174 @@
+.section {
+  padding: 100px 48px;
+  background: var(--dark);
+  color: white;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto 50px;
+}
+
+.title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  color: white;
+}
+
+.subtitle {
+  color: var(--gray);
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.seeAll {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.thumb {
+  height: 340px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.teal { background: linear-gradient(135deg, #67b8c8, #89d4d0); }
+.gold { background: linear-gradient(135deg, #f0b429, #f5c842); }
+.purple { background: linear-gradient(135deg, #818cf8, #a78bfa); }
+.green { background: linear-gradient(135deg, #34d399, #6ee7b7); }
+
+.thumbContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.mock {
+  width: 280px;
+  height: 180px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.mockBar {
+  height: 24px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 5px;
+}
+
+.dotRed, .dotYellow, .dotGreen {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dotRed { background: #ef4444; }
+.dotYellow { background: #f59e0b; }
+.dotGreen { background: #22c55e; }
+
+.mockBody {
+  padding: 16px;
+  text-align: center;
+}
+
+.mockBody h5 {
+  font-size: 11px;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.mockLine {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  margin: 4px auto;
+  width: 100%;
+}
+
+.short { width: 60%; }
+.medium { width: 80%; }
+
+.mockBtn {
+  display: inline-block;
+  background: #ef4444;
+  color: white;
+  font-size: 8px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.box {
+  width: 220px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.info {
+  padding: 24px 4px;
+}
+
+.info h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.info p {
+  color: var(--gray);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 24px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .thumb {
+    height: 260px;
+  }
+}
